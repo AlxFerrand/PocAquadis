@@ -27,7 +27,7 @@ public static class RegleRemplissage
 
         bool villeActive = DeterminerVilleActive(pourcentage, seuils, etatPrecedent);
         bool forageActif = !villeActive && DeterminerForageActif(pourcentage, seuils, etatPrecedent);
-        bool securiteManqueEau = DeterminerSecuriteManqueEau(pourcentage, seuils);
+        bool securiteManqueEau = DeterminerSecuriteManqueEau(pourcentage, seuils, etatPrecedent);
 
         return new EtatSorties(forageActif, villeActive, securiteManqueEau);
     }
@@ -67,13 +67,19 @@ public static class RegleRemplissage
     }
 
     /// <summary>
-    /// Dit si la sécurité manque d'eau doit être activée (sans hystérésis : sortie de sécurité).
+    /// Dit si la sécurité manque d'eau doit être activée : elle démarre sous le seuil sécurité et continue jusqu'au seuil ville.
     /// </summary>
     /// <param name="pourcentage">Niveau actuel de la cuve, en % de la hauteur.</param>
     /// <param name="seuils">Seuils de remplissage paramétrés.</param>
-    /// <returns>Vrai si le niveau est strictement inférieur au seuil de sécurité.</returns>
-    private static bool DeterminerSecuriteManqueEau(double pourcentage, SeuilsRemplissage seuils)
+    /// <param name="etatPrecedent">État des sorties au cycle précédent.</param>
+    /// <returns>Vrai si la sécurité manque d'eau doit rester ou devenir active.</returns>
+    private static bool DeterminerSecuriteManqueEau(
+        double pourcentage, SeuilsRemplissage seuils, EtatSorties etatPrecedent)
     {
-        return pourcentage < seuils.SeuilSecuritePourcent;
+        bool sousSeuilSecurite = pourcentage < seuils.SeuilSecuritePourcent;
+        bool poursuitJusquAuSeuilVille = etatPrecedent.SecuriteManqueEau
+            && pourcentage < seuils.SeuilVillePourcent;
+
+        return sousSeuilSecurite || poursuitJusquAuSeuilVille;
     }
 }

@@ -73,6 +73,38 @@ public class RegleRemplissageTests
     }
 
     /// <summary>
+    /// Vérifie l'hystérésis de la sécurité manque d'eau : elle démarre sous le seuil sécurité et ne s'arrête qu'au seuil ville.
+    /// </summary>
+    /// <param name="pourcentage">Niveau actuel de la cuve, en % de la hauteur.</param>
+    /// <param name="securitePrecedente">Vrai si la sécurité manque d'eau était active au cycle précédent.</param>
+    /// <param name="securiteAttendue">Vrai si la sécurité manque d'eau doit être active.</param>
+    /// <returns>Rien : le test échoue si l'état de la sécurité diffère de l'attendu.</returns>
+    [Theory]
+    // Sous le seuil sécurité : elle s'active
+    [InlineData(5, false, true)]
+    // Seuil sécurité exact : pas d'activation (comparaison stricte)
+    [InlineData(10, false, false)]
+    // Hystérésis : elle reste active au-dessus du seuil sécurité
+    [InlineData(30, true, true)]
+    // Seuil ville exact : elle s'arrête
+    [InlineData(50, true, false)]
+    // Au-dessus du seuil ville : elle reste arrêtée
+    [InlineData(70, true, false)]
+    public void DeterminerEtatSorties_SecuriteManqueEau_AppliqueLHysteresis(
+        double pourcentage, bool securitePrecedente, bool securiteAttendue)
+    {
+        // Organiser
+        SeuilsRemplissage seuils = CreerSeuilsStandard();
+        EtatSorties etatPrecedent = new(false, false, securitePrecedente);
+
+        // Agir
+        EtatSorties resultat = RegleRemplissage.DeterminerEtatSorties(pourcentage, seuils, etatPrecedent);
+
+        // Vérifier
+        Assert.Equal(securiteAttendue, resultat.SecuriteManqueEau);
+    }
+
+    /// <summary>
     /// Vérifie qu'un pourcentage hors de 0 à 100 est refusé.
     /// </summary>
     /// <param name="pourcentage">Pourcentage invalide à tester.</param>
