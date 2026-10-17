@@ -38,6 +38,7 @@ coverage*.xml
 appsettings.*.local.json
 secrets.json
 .env
+cookies.txt
 
 # Fichiers du système
 .DS_Store

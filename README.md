@@ -33,9 +33,41 @@ dotnet test AquaCuve.sln
 dotnet run --project src/AquaCuve.Serveur
 ```
 
+## Base de données
+
+SQLite, dans le fichier `aquacuve.db` du dossier d'exécution du serveur (ignoré par Git). La base est **supprimée puis recréée à chaque démarrage** avec les données de démonstration : un agriculteur (Ferme Le Goff) avec trois cuves aux profils différents et leurs coffrets simulés, plus deux comptes (Admin et agriculteur). L'historique de mesures est généré à l'étape 4.
+
 ## Comptes de démonstration
 
-À définir à l'étape 3 (authentification). Uniquement des mots de passe de démonstration, jamais ceux d'un vrai environnement.
+Deux comptes sont créés au démarrage : un **Admin** (voit toutes les cuves) et un **agriculteur** (ne voit que ses cuves). Leurs courriels sont dans `src/AquaCuve.Serveur/appsettings.json` (section `ComptesDemo`).
+
+**Les mots de passe ne sont écrits nulle part dans le dépôt** : vous les choisissez et les gardez en local. Ils doivent respecter les règles par défaut d'ASP.NET Core Identity (6 caractères minimum, avec majuscule, minuscule, chiffre et caractère spécial).
+
+En développement, avec les secrets utilisateur (stockés hors du dépôt) :
+
+```
+cd src/AquaCuve.Serveur
+dotnet user-secrets set "ComptesDemo:Admin:MotDePasse" "<mot de passe de votre choix>"
+dotnet user-secrets set "ComptesDemo:Agriculteur:MotDePasse" "<mot de passe de votre choix>"
+```
+
+Dans Visual Studio : clic droit sur le projet `AquaCuve.Serveur`, puis « Gérer les secrets utilisateur ».
+
+Chez l'hébergeur de démonstration : variables d'environnement `ComptesDemo__Admin__MotDePasse` et `ComptesDemo__Agriculteur__MotDePasse`.
+
+Sans ces valeurs, le serveur refuse de démarrer et indique quelle clé de configuration manque.
+
+## Tester l'API sans interface
+
+Le client arrive à l'étape 5. En attendant, avec curl (le cookie de session est conservé dans `cookies.txt`) :
+
+```
+curl -k -c cookies.txt -H "Content-Type: application/json" -d "{\"courriel\":\"agriculteur@aquacuve.demo\",\"motDePasse\":\"<votre mot de passe>\"}" https://localhost:53196/api/auth/connexion
+curl -k -b cookies.txt https://localhost:53196/api/auth/moi
+curl -k -b cookies.txt https://localhost:53196/api/installations
+```
+
+Un fichier `src/AquaCuve.Serveur/AquaCuve.Serveur.http` permet aussi de tester depuis Visual Studio (voir les commentaires en tête du fichier).
 
 ## Déploiement de démonstration
 
