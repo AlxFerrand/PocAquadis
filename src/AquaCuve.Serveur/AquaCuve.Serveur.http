@@ -1,0 +1,26 @@
+### Requêtes de test de l'API (Visual Studio : choisir l'environnement « dev » en haut de l'éditeur).
+###
+### Les variables Courriel et MotDePasse viennent du fichier http-client.env.json.user, à créer à côté de ce fichier
+### (jamais versionné : les fichiers .user sont ignorés par Git). Exemple de contenu, à adapter :
+###   { "dev": { "Courriel": "agriculteur@aquacuve.demo", "MotDePasse": "<votre mot de passe local>" } }
+###
+### Attention : le maintien du cookie de session entre les requêtes dépend de l'éditeur .http.
+### Si /api/auth/moi répond 401 juste après la connexion, utiliser la commande curl du README.
+
+### 1. Connexion : pose le cookie de session
+POST {{hote}}/api/auth/connexion
+Content-Type: application/json
+
+{
+  "courriel": "{{Courriel}}",
+  "motDePasse": "{{MotDePasse}}"
+}
+
+### 2. Utilisateur connecté
+GET {{hote}}/api/auth/moi
+
+### 3. Installations accessibles (toutes pour l'Admin, les siennes pour l'agriculteur)
+GET {{hote}}/api/installations
+
+### 4. Déconnexion
+POST {{hote}}/api/auth/deconnexion

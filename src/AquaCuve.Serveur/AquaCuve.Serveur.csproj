@@ -1,5 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
+  <PropertyGroup>
+    <!-- Identifiant des secrets utilisateur : les mots de passe de démonstration y sont stockés en développement (voir README). -->
+    <UserSecretsId>b7c2d8a4-5e3f-4a91-9d6c-2f1e8a7b4c35</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="10.0.13" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="10.0.13" />
+  </ItemGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\AquaCuve.Partage\AquaCuve.Partage.csproj" />
   </ItemGroup>
