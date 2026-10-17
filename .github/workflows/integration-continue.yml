@@ -16,7 +16,7 @@ jobs:
       - name: Installer le SDK .NET
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: 9.0.x
+          dotnet-version: 10.0.x
 
       - name: Restaurer les paquets
         run: dotnet restore AquaCuve.sln

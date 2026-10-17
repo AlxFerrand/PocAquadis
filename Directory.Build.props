@@ -3,7 +3,7 @@
   <!-- Réglages communs à tous les projets de la solution. -->
   <PropertyGroup>
     <!-- Cible unique : un seul endroit à modifier pour changer de version de .NET. -->
-    <TargetFramework>net9.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <LangVersion>latest</LangVersion>

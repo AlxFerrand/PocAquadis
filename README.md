@@ -6,8 +6,8 @@ Le POC démontre l'historisation des mesures (24 h et 30 jours), le paramétrage
 
 ## Prérequis
 
-- Visual Studio 2022 (dernière version) avec la charge de travail « ASP.NET et développement web »
-- SDK .NET 9 (le support de .NET 9 se termine le 10 novembre 2026 : version cible à confirmer)
+- Visual Studio récent, compatible .NET 10, avec la charge de travail « ASP.NET et développement web »
+- SDK .NET 10 (version LTS)
 - Pour tester la PWA sur téléphone avant l'hébergement : un tunnel HTTPS (Dev Tunnels ou Cloudflare Tunnel)
 
 ## Structure
