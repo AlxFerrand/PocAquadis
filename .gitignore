@@ -1,0 +1,44 @@
+# Sorties de compilation
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+artifacts/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userprefs
+*.rsuser
+*.DotSettings.user
+.idea/
+
+# Tests et couverture
+TestResults/
+[Tt]est[Rr]esult*/
+coverage*.json
+coverage*.xml
+*.coverage
+*.trx
+
+# NuGet
+*.nupkg
+*.snupkg
+.nuget/
+
+# Base de données locale (recréée au démarrage avec les données de démonstration)
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3
+
+# Secrets et configuration locale : ne jamais versionner
+appsettings.*.local.json
+secrets.json
+.env
+
+# Fichiers du système
+.DS_Store
+Thumbs.db

@@ -1,0 +1,28 @@
+name: Intégration continue
+
+# Compile la solution et lance les tests à chaque envoi de code et à chaque demande de fusion.
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  construire-et-tester:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Récupérer le code
+        uses: actions/checkout@v4
+
+      - name: Installer le SDK .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 9.0.x
+
+      - name: Restaurer les paquets
+        run: dotnet restore AquaCuve.sln
+
+      - name: Compiler
+        run: dotnet build AquaCuve.sln --configuration Release --no-restore
+
+      - name: Lancer les tests
+        run: dotnet test AquaCuve.sln --configuration Release --no-build --verbosity normal

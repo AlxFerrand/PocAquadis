@@ -1,0 +1,5 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Contrats d'API (DTO) et règles métier pures : aucune dépendance vers la base, l'horloge ou le réseau. -->
+
+</Project>

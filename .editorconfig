@@ -1,0 +1,67 @@
+# Style commun du dépôt AQUA'Cuve (voir BONNES_PRATIQUES.md)
+root = true
+
+[*]
+charset = utf-8
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_style = space
+indent_size = 4
+
+[*.{json,yml,yaml,csproj,props,razor,html,css,js,md}]
+indent_size = 2
+
+[*.md]
+trim_trailing_whitespace = false
+
+[*.sln]
+indent_style = tab
+
+[*.cs]
+# Espaces de noms à portée de fichier (une ligne)
+csharp_style_namespace_declarations = file_scoped:warning
+
+# Accolades toujours présentes, style Allman
+csharp_prefer_braces = true:warning
+csharp_new_line_before_open_brace = all
+
+# Utiliser var uniquement quand le type est évident
+csharp_style_var_for_built_in_types = false:suggestion
+csharp_style_var_when_type_is_apparent = true:suggestion
+csharp_style_var_elsewhere = false:suggestion
+
+# using en dehors de l'espace de noms, triés avec System en premier
+csharp_using_directive_placement = outside_namespace:warning
+dotnet_sort_system_directives_first = true
+
+# Nommage : PascalCase pour les types et membres, _camelCase pour les champs privés
+dotnet_naming_rule.interfaces_commencent_par_i.severity = warning
+dotnet_naming_rule.interfaces_commencent_par_i.symbols = interfaces
+dotnet_naming_rule.interfaces_commencent_par_i.style = style_interface
+
+dotnet_naming_rule.champs_prives.severity = warning
+dotnet_naming_rule.champs_prives.symbols = champs_prives
+dotnet_naming_rule.champs_prives.style = style_champ_prive
+
+dotnet_naming_rule.constantes.severity = warning
+dotnet_naming_rule.constantes.symbols = constantes
+dotnet_naming_rule.constantes.style = style_pascal
+
+dotnet_naming_rule.types_et_membres.severity = warning
+dotnet_naming_rule.types_et_membres.symbols = types_et_membres
+dotnet_naming_rule.types_et_membres.style = style_pascal
+
+dotnet_naming_symbols.interfaces.applicable_kinds = interface
+dotnet_naming_symbols.champs_prives.applicable_kinds = field
+dotnet_naming_symbols.champs_prives.applicable_accessibilities = private, protected, private_protected
+dotnet_naming_symbols.constantes.applicable_kinds = field
+dotnet_naming_symbols.constantes.required_modifiers = const
+# Les méthodes sont exclues volontairement : les tests utilisent des underscores (Methode_Condition_Resultat)
+dotnet_naming_symbols.types_et_membres.applicable_kinds = class, struct, enum, property, event, delegate
+dotnet_naming_symbols.types_et_membres.applicable_accessibilities = public, internal, protected, protected_internal
+
+dotnet_naming_style.style_interface.required_prefix = I
+dotnet_naming_style.style_interface.capitalization = pascal_case
+dotnet_naming_style.style_champ_prive.required_prefix = _
+dotnet_naming_style.style_champ_prive.capitalization = camel_case
+dotnet_naming_style.style_pascal.capitalization = pascal_case

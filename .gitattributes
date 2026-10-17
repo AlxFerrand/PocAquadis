@@ -1,0 +1,7 @@
+# Normalise les fins de ligne : évite les différences Windows / Linux dans Git
+* text=auto
+
+*.sln text eol=crlf
+*.png binary
+*.jpg binary
+*.ico binary
